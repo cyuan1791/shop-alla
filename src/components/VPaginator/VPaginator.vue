@@ -57,8 +57,13 @@
         }
         this.$http.get(pageUrl, config)
           .then(function (response) {
-            self.$emit('request_finish', response)
-            self.handleResponseData(response.data)
+              self.$emit('request_finish', response)
+              try {
+                self.handleResponseData(response.data)
+              } catch (err) {
+                console.log(response.bodyText)
+                console.log(err)
+              }
           }).catch(function (response) {
           self.$emit('request_error', response)
           console.log('Fetching data failed.', response)

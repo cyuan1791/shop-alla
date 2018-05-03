@@ -1,12 +1,15 @@
 <template>
   <div class="row">
     <div class="col-xs-12">
-      <v-paginator :resource_url="resource_url" @update="updateResource"></v-paginator>
+      <div style="text-align: center;">
+      <v-paginator :resource_url="resource_url" @update="updateResource" ></v-paginator>
+      </div>
     </div>
     <hr>
     <div class="row">
-      <div v-for="(item, index) in products" :key="index" class="col-xs-3">
-        <div class="thumbnail">
+      <div v-for="(item, index) in products" :key="index">
+        <div class="col-xs-3">
+          <div class="thumbnail ctext">
           <img :src="item.imgUrl"/>
           <h3> {{item.title}}</h3>
           <p v-html="item.description">
@@ -23,6 +26,8 @@
           </form>
           {{ item.index }} of {{ item.total}}
         </div>
+        </div>
+        <div class="row" v-if="index % 4 === 3 "><div class="col-xs-12"></div></div>
       </div>
     </div>
   </div>
@@ -64,7 +69,7 @@
       getProduct (prod) {
         return {
           name: 'welcome',
-          description: 'desc',
+          description: prod.title,
           amount: prod.amount
         }
       }

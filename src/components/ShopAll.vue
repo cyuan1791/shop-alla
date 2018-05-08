@@ -22,11 +22,12 @@
           <div class="thumbnail ctext">
           <img :src="item.imgUrl"/>
           <h3> {{item.title}}</h3>
-            <h3> {{item.shop}}</h3>
             <h4> {{item.keywords}}</h4>
-            <h5> {{item.ukey}}</h5>
-          <p v-html="item.description">
-          </p>
+          <span v-html="item.description">
+          </span>
+            <button v-if="item.modal !== ''" class='btn btn-info pull-right' @click="openModal(item.modal)">More</button>
+            <modals-container name="webasone">
+            </modals-container>
             <h5 style="text-align: center;">price ${{ item.amount / 100 }} + shipping ${{ item.shipping / 100}} + tax</h5>
             <div class="row" v-if="index % 4 === 3 "><div class="col-xs-12"></div></div>
             <form action="charge.php" method="POST" style="text-align: center">
@@ -132,6 +133,18 @@
       },
       startUrl () {
         return window.shop['url'] + 'shop_json.php?pageno=1&pagesize=' + window.shop['pagesize'] + '&shops=' + window.shop['shops'].join('%20') + '&loc=' + window.shop['loc']
+      },
+      openModal (description) {
+        this.$modal.show({
+          template: `<div class="panel panel-default"><div class="panel-heading"><button class="btn btn-default" @click="$emit('close')">Close</button></div><div class="panel-body"><p v-html="description" /></div> </div>`,
+          props: ['description']
+        }, {
+          description: description
+        }, {
+          width: '80%',
+          height: '60%'
+        }, {
+        })
       }
     },
     created () {

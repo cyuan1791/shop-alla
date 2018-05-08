@@ -8,6 +8,7 @@
           <option v-for="(shop, index) in shops" :key="index">{{shop}}</option>
         </select>
         <select v-model="selectedKeyword">
+          <option></option>
           <option >{{selectedKeyword}}</option>
           <option v-for="(keyword, index) in keywords" :key="index">{{keyword}}</option>
         </select>
@@ -23,6 +24,7 @@
           <h3> {{item.title}}</h3>
             <h3> {{item.shop}}</h3>
             <h4> {{item.keywords}}</h4>
+            <h5> {{item.ukey}}</h5>
           <p v-html="item.description">
           </p>
             <h5 style="text-align: center;">price ${{ item.amount / 100 }} + shipping ${{ item.shipping / 100}} + tax</h5>
@@ -134,7 +136,7 @@
     },
     created () {
       var _this = this
-        this.$http.get(window.shopinfo).then(response => {
+        this.$http.get(window.shop['url'] + 'info_json.php').then(response => {
           _this.keywords = response.body['keys']
           _this.shops = response.body['shops']
           // console.log(response.body['keys'])

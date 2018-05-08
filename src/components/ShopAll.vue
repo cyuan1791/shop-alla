@@ -4,7 +4,7 @@
       <div style="text-align: center;">
       <v-paginator :resource_url="resource_url" :shops="shops" @update="updateResource" ></v-paginator>
         <select v-model="selectedShop">
-          <option disabled value="">Please select one</option>
+          <option value="">All</option>
           <option v-for="(shop, index) in shops" :key="index">{{shop}}</option>
         </select>
         <select v-model="selectedKeyword">
@@ -22,6 +22,7 @@
           <img :src="item.imgUrl"/>
           <h3> {{item.title}}</h3>
             <h3> {{item.shop}}</h3>
+            <h4> {{item.keywords}}</h4>
           <p v-html="item.description">
           </p>
             <h5 style="text-align: center;">price ${{ item.amount / 100 }} + shipping ${{ item.shipping / 100}} + tax</h5>
@@ -79,13 +80,31 @@
     watch: {
       selectedShop (newVal, oldVar) {
         // location.reload()
-        this.resource_url = 'https://json.webasone.com/firebase/shop_json.php?pageno=1&pagesize=8&shops=reddingca&caloc=en_us'
-        console.log(newVal)
+        // this.resource_url = 'https://json.webasone.com/firebase/shop_json.php?pageno=1&pagesize=8&shops=reddingca&caloc=en_us'
+        var shopList = ''
+        if (newVal === '') {
+          shopList = window.shop['shops'].join('%20')
+        } else {
+          shopList = newVal
+        }
+        var selectKey = ''
+        // console.log(this.selectedKeyword)
+        if (this.selectedKeyword !== '') {
+          selectKey = '&key=' + this.selectedKeyword
+        }
+        this.resource_url = window.shop['url'] + 'shop_json.php?pageno=1&pagesize=' + window.shop['pagesize'] + '&shops=' + shopList + '&loc=' + window.shop['loc'] + selectKey
+        // console.log(this.resource_url)
       },
       selectedKeyword (newVal, oldVar) {
         // location.reload()
-        this.resource_url = 'https://json.webasone.com/firebase/shop_json.php?pageno=1&pagesize=8&shops=reddingca%20chicoca&loc=en_us'
-        console.log(newVal)
+        var shopList = ''
+        if (this.selectedShop === '') {
+          shopList = window.shop['shops'].join('%20')
+        } else {
+          shopList = this.selectedShop
+        }
+        this.resource_url = window.shop['url'] + 'shop_json.php?pageno=1&pagesize=' + window.shop['pagesize'] + '&shops=' + shopList + '&loc=' + window.shop['loc'] + '&key=' + newVal
+        // console.log(this.resource_url)
       }
     },
     components: {
@@ -114,12 +133,11 @@
       }
     },
     created () {
-        console.log(window.shop['url'] + 'shop_json.php?pageno=1&pagesize=' + window.shop['pagesize'] + '&shops=' + window.shop['shops'].join('%20') + '&loc=' + window.shop['loc'])
       var _this = this
         this.$http.get(window.shopinfo).then(response => {
           _this.keywords = response.body['keys']
           _this.shops = response.body['shops']
-          console.log(response.body['keys'])
+          // console.log(response.body['keys'])
     }, response => {
           // error
     })

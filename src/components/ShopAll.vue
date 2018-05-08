@@ -59,12 +59,11 @@
         shops: [],
         keywords: [],
         products: [],
-        products: [],
         shopsInfo: window.shop,
         // Here you define the url of your paginated API
         //        resource_url: 'https://json.webasone.com/samples/animals1.php'
         // resource_url: window.shopuri
-        resource_url: window.shopinfo['url'] + 'shop_json.php?pageno=1&pagesize=' + window.shopinfo['pagesize'] + '&' + window.shopinfo['shops'].join('%20') + '&loc=' + window.shopinfo['loc']
+        resource_url: window.shop['url'] + 'shop_json.php?pageno=1&pagesize=' + window.shop['pagesize'] + '&shops=' + window.shop['shops'].join('%20') + '&loc=' + window.shop['loc']
 
         // resource_url: 'https://json.webasone.com/firebase/a.php?pageno=1&pagesize=5&shops=chicoca&loc=en_us'
       }
@@ -111,10 +110,11 @@
         }
       },
       startUrl () {
-        return window.shopinfo['url'] + 'shop_json.php?pageno=1&pagesize=' + window.shopinfo['pagesize'] + '&' + window.shopinfo['shops'].join('%20') + '&loc=' + window.shopinfo['loc']
+        return window.shop['url'] + 'shop_json.php?pageno=1&pagesize=' + window.shop['pagesize'] + '&shops=' + window.shop['shops'].join('%20') + '&loc=' + window.shop['loc']
       }
     },
     created () {
+        console.log(window.shop['url'] + 'shop_json.php?pageno=1&pagesize=' + window.shop['pagesize'] + '&shops=' + window.shop['shops'].join('%20') + '&loc=' + window.shop['loc'])
       var _this = this
         this.$http.get(window.shopinfo).then(response => {
           _this.keywords = response.body['keys']

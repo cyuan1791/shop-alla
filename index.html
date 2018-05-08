@@ -14,7 +14,7 @@
     <script>
       window.stripePKey= 'pk_test_5cQYArKzzFMqm4LZbptu9EPe';
       window.shop = {
-        shops : [ 'readdingca', 'chicoca'],
+        shops : [ 'reddingca', 'chicoca'],
         pagesize: 8,
         loc: 'en_us',
         url: 'https://json.webasone.com/firebase/'
@@ -22,6 +22,8 @@
       window.shopuri= 'https://json.webasone.com/firebase/shop_json.php?pageno=1&pagesize=8&shops=reddingca%20chicoca&loc=en_us';
       window.shopinfo= 'https://json.webasone.com/firebase/info_json.php';
       window.tax = 0.08;
+      console.log(window.shop['shops'].join('-'));
+      console.log('hello');
     </script>
     <!-- built files will be auto injected -->
   </body>

@@ -136,7 +136,7 @@
       },
       openModal (description) {
         this.$modal.show({
-          template: `<div class="panel panel-default"><div class="panel-heading"><button class="btn btn-default" @click="$emit('close')">Close</button></div><div class="panel-body"><p v-html="description" /></div> </div>`,
+          template: `<div class="panel panel-default"><div class="panel-heading"><button class="btn btn-default center-block" @click="$emit('close')">Close</button></div><div class="panel-body"><p v-html="description" /></div> </div>`,
           props: ['description']
         }, {
           description: description

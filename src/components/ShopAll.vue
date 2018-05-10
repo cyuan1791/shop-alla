@@ -17,32 +17,40 @@
     <hr>
     <div class="row">
       <transition-group name="list" tag="div">
-      <div v-for="(item, index) in products" :key="index">
-        <div class="col-xs-3">
-          <div class="thumbnail ctext">
-          <img :src="item.imgUrl"/>
-          <h3> {{item.title}}</h3>
-            <h4> {{item.keywords}}</h4>
-          <span v-html="item.description">
+        <div v-for="(item, index) in products" :key="index">
+          <div class="col-xs-3">
+            <div class="thumbnail ctext">
+              <img :src="item.imgUrl"/>
+              <h3> {{item.title}}</h3>
+              <h4> {{item.keywords}}</h4>
+              <span v-html="item.description">
           </span>
-            <button v-if="item.modal !== ''" class='btn btn-info pull-right' @click="openModal(item.modal)">More</button>
-            <modals-container name="webasone">
-            </modals-container>
-            <h5 style="text-align: center;">price ${{ item.amount / 100 }} + shipping ${{ item.shipping / 100}} + tax</h5>
-            <div class="row" v-if="index % 4 === 3 "><div class="col-xs-12"></div></div>
-            <form action="charge.php" method="POST" style="text-align: center">
-            <stripe-checkout
-              :formId="item.ukey"
-              :options="options"
-              :stripe-key="stripePKey"
-              :product="getProduct(item)">
-            </stripe-checkout>
-            <input type="hidden" name="amount" :value="total(item)"/>
-            <input type="hidden" name="cid" :value="item.connectAccount"/>
-          </form>
+              <button v-if="item.modal !== ''" class='btn btn-info pull-right' @click="openModal(item.modal)">More
+              </button>
+              <modals-container name="webasone">
+              </modals-container>
+              <div v-if="item.amount > 0">
+                <h5 style="text-align: center;">price ${{ item.amount / 100 }} + shipping ${{ item.shipping / 100}} +
+                  tax</h5>
+                <div class="row" v-if="index % 4 === 3 ">
+                  <div class="col-xs-12">
+                    <hr/>
+                  </div>
+                </div>
+                <form action="charge.php" method="POST" style="text-align: center">
+                  <stripe-checkout
+                    :formId="item.ukey"
+                    :options="options"
+                    :stripe-key="stripePKey"
+                    :product="getProduct(item)">
+                  </stripe-checkout>
+                  <input type="hidden" name="amount" :value="total(item)"/>
+                  <input type="hidden" name="cid" :value="item.connectAccount"/>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
-        </div>
-      </div>
       </transition-group>
     </div>
   </div>

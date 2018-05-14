@@ -159,7 +159,7 @@
       var _this = this
         this.$http.get(window.shop['url'] + 'info_json.php').then(response => {
           _this.keywords = response.body['keys']
-          _this.shops = response.body['shops']
+          _this.shops = window.shop['shops']
           // console.log(response.body['keys'])
     }, response => {
           // error

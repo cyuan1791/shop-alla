@@ -18,7 +18,7 @@
     <div class="row">
       <transition-group name="list" tag="div">
         <div v-for="(item, index) in products" :key="index">
-          <div class="col-xs-3">
+          <div class="col-md-3 col-sm-6 col-xs-12">
             <div class="thumbnail ctext">
               <img :src="item.imgUrl"/>
               <h3> {{item.title}}</h3>

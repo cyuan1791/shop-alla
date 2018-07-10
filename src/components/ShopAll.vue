@@ -64,7 +64,7 @@
                   <input type="hidden" name="amount" :value="total(item)"/>
                   <input type="hidden" name="cid" :value="item.connectAccount"/>
                 </form>
-                <button @click="addToCart(item)">Add to cart</button>
+                <button class="cartbutton" @click="addToCart(item)">Add to cart</button>
               </div>
             </div>
           </div>
@@ -77,7 +77,8 @@
 <script>
   import VuePaginator from './VPaginator/VPaginator'
   import WaoStripe from './WAOStripe/WaoStripe'
-  import HelloWorld from './HelloWorld'
+  import { Store } from './WAOStripe/store.js'
+  import { Payment } from './WAOStripe/payments.js'
   import { StripeCheckout } from 'vue-stripe'
   import { Card, createToken } from 'vue-stripe-elements-plus'
 
@@ -146,8 +147,7 @@
       VPaginator: VuePaginator,
       StripeCheckout,
       Card,
-      WaoStripe,
-      HelloWorld
+      WaoStripe
     },
     methods: {
       addToCart (item, event) {
@@ -196,7 +196,11 @@
     },
     created () {
       var _this = this
-        this.$http.get(window.shop['url'] + 'info_json.php').then(response => {
+      var store = new Store()
+      console.log(window)
+
+      Payment(store)
+      this.$http.get(window.shop['url'] + 'info_json.php').then(response => {
           _this.keywords = response.body['keys']
           _this.shops = window.shop['shops']
           // console.log(response.body['keys'])
@@ -225,5 +229,33 @@
   }
   .stripe-card.complete {
     border-color: green;
+  }
+  button.cartbutton {
+    display: block;
+    background: #666ee8;
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    border: 0;
+    font-weight: 700;
+    width: 100%;
+    height: 40px;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  button.cartbutton:focus {
+    background: #555abf;
+  }
+
+  button.cartbutton:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 7px 14px 0 rgba(50, 50, 93, 0.1),
+    0 3px 6px 0 rgba(0, 0, 0, 0.08);
+  }
+
+  button.cartbutton:active {
+    background: #43458b;
   }
 </style>

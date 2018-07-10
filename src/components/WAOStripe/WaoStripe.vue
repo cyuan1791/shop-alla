@@ -204,7 +204,7 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
   /**
   * store.css
   * Stripe Payments Demo. Created by Romain Huet (@romainhuet).

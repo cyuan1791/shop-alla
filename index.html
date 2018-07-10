@@ -1,28 +1,38 @@
-<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>shop-alla</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-  </head>
-  <body>
-    <div class="container">
-        <div id="app"></div>
-    </div>
-    <script>
-      window.stripePKey= 'pk_test_5cQYArKzzFMqm4LZbptu9EPe';
-      window.shop = {
-        shops : [ 'groupe', 'chicoca'],
-        pagesize: 8,
-        loc: 'en_us',
-        url: 'https://json.webasone.com/test/firebase/'
-      };
-      // window.shopuri= 'https://json.webasone.com/firebase/shop_json.php?pageno=1&pagesize=8&shops=reddingca%20chicoca&loc=en_us';
-      // window.shopinfo= 'https://json.webasone.com/firebase/info_json.php';
-      window.tax = 0.08;
-    </script>
-    <!-- built files will be auto injected -->
-  </body>
+<head>
+  <title>Stripe Payments Demo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>shop-alla</title>
+  <script src="https://js.stripe.com/v3/"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body>
+  <div id="app"></div>
+</div>
+<script>
+  window.stripePKey = 'pk_test_5cQYArKzzFMqm4LZbptu9EPe';
+  window.shop = {
+    shops: ['groupe', 'chicoca'],
+    pagesize: 8,
+    loc: 'en_us',
+    url: 'https://json.webasone.com/test/firebase/'
+  };
+  // window.shopuri= 'https://json.webasone.com/firebase/shop_json.php?pageno=1&pagesize=8&shops=reddingca%20chicoca&loc=en_us';
+  // window.shopinfo= 'https://json.webasone.com/firebase/info_json.php';
+  window.tax = 0.08;
+</script>
+  <!-- Stripe.js v3 for Elements -->
+  <script src="https://js.stripe.com/v3/"></script>
+  <!-- Library to render QR codes -->
+  <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+  <!-- App -->
+  <script src="static/store.js"></script>
+  <script src="static/payments.js"></script>
+  <!-- built files will be auto injected -->
+</body>
+
 </html>

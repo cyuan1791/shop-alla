@@ -1,5 +1,6 @@
 <template>
   <div class="row">
+    <wao-stripe></wao-stripe>
     <div class="col-xs-12">
       <div style="text-align: center;">
       <v-paginator :resource_url="resource_url" :shops="shops" @update="updateResource" ></v-paginator>
@@ -15,6 +16,22 @@
       </div>
     </div>
     <hr>
+    <div class="col-xs-12" v-if="cartItem">
+      <div class="row">
+        <div class="col-xs-6">
+      <span > {{cartItem.title}}</span>
+        </div>
+        <div class="col-xs-6">
+      <card class='stripe-card'
+            :class='{ complete }'
+            stripe='stripePKey'
+            :options='stripeOptions'
+            @change='complete = $event.complete'
+      />
+      <button class='pay-with-stripe' @click='pay' :disabled='!complete'>Pay with credit card</button>
+    </div>
+      </div>
+    </div>
     <div class="row">
       <transition-group name="list" tag="div">
         <div v-for="(item, index) in products" :key="index">
@@ -47,6 +64,7 @@
                   <input type="hidden" name="amount" :value="total(item)"/>
                   <input type="hidden" name="cid" :value="item.connectAccount"/>
                 </form>
+                <button @click="addToCart(item)">Add to cart</button>
               </div>
             </div>
           </div>
@@ -58,7 +76,10 @@
 
 <script>
   import VuePaginator from './VPaginator/VPaginator'
+  import WaoStripe from './WAOStripe/WaoStripe'
+  import HelloWorld from './HelloWorld'
   import { StripeCheckout } from 'vue-stripe'
+  import { Card, createToken } from 'vue-stripe-elements-plus'
 
   export default {
     name: 'ShopAll',
@@ -66,8 +87,11 @@
       return {
         msg: 'Welcome to Your Vue.js App',
         stripePKey: window.stripePKey,
+        stripeOptions: {},
+        complete: false,
         selectedShop: '',
         selectedKeyword: '',
+        cartItem: null,
         shops: [],
         keywords: [],
         products: [],
@@ -120,9 +144,24 @@
     },
     components: {
       VPaginator: VuePaginator,
-      StripeCheckout
+      StripeCheckout,
+      Card,
+      WaoStripe,
+      HelloWorld
     },
     methods: {
+      addToCart (item, event) {
+        console.log(item)
+        this.cartItem = item
+      },
+      pay () {
+        // createToken returns a Promise which resolves in a result object with
+        // either a token or an error key.
+        // See https://stripe.com/docs/api#tokens for the token object.
+        // See https://stripe.com/docs/api#errors for the error object.
+        // More general https://stripe.com/docs/stripe.js#stripe-create-token.
+        createToken().then(data => console.log(data.token))
+      },
       total (item) {
         return (item.amount + item.amount * window.tax + item.shipping) / 100
       },
@@ -179,5 +218,12 @@
   .list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
     opacity: 0;
     transform: translateY(30px);
+  }
+  .stripe-card {
+    width: 300px;
+    border: 1px solid grey;
+  }
+  .stripe-card.complete {
+    border-color: green;
   }
 </style>

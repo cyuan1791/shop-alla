@@ -18,7 +18,7 @@
     <div class="row">
       <transition-group name="list" tag="div">
         <div v-for="(item, index) in products" :key="index">
-          <div class="col-xs-3">
+          <div class="col-xs-12 col-sm-6 col-md-3">
             <div class="thumbnail ctext">
               <img :src="item.imgUrl"/>
               <h3> {{item.title}}</h3>
@@ -30,8 +30,7 @@
               <modals-container name="webasone">
               </modals-container>
               <div v-if="item.amount > 0">
-                <h5 style="text-align: center;">price ${{ item.amount / 100 }} + shipping ${{ item.shipping / 100}} +
-                  tax</h5>
+                <h5 style="text-align: center;">price ${{ item.amount / 100 }}(shipping and tax included)</h5>
                 <div class="row" v-if="index % 4 === 3 ">
                   <div class="col-xs-12">
                     <hr/>
@@ -44,7 +43,7 @@
                     :stripe-key="stripePKey"
                     :product="getProduct(item)">
                   </stripe-checkout>
-                  <input type="hidden" name="amount" :value="total(item)"/>
+                  <input type="hidden" name="skuId" :value="item.skuId"/>
                   <input type="hidden" name="cid" :value="item.connectAccount"/>
                 </form>
               </div>

@@ -193,7 +193,6 @@ export default {
           this.selectedKeys.push(item.value)
         }
       }
-      console.log('check')
       e.preventDefault()
     },
     openModal (description) {

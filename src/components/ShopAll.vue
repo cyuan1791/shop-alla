@@ -130,7 +130,7 @@ export default {
     },
     selectedKeys (newVal, oldVar) {
       // location.reload()
-      console.log(newVal)
+      //console.log(newVal)
       var newKeys = newVal.join('%20')
       var shopList = ''
       if (this.selectedShop === '') {
